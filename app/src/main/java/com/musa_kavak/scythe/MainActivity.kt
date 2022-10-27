@@ -1,40 +1,30 @@
 package com.musa_kavak.scythe
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import okhttp3.*
+import com.musa_kavak.scythe.services.UserService
+import com.musa_kavak.scythe.views.home.HomeActivity
+import com.musa_kavak.scythe.views.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mClient: OkHttpClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        mClient = OkHttpClient()
-        startSocket()
+        controlUserState()
     }
 
-    private fun startSocket(){
-        Log.i("WebsocketListener", "Opened-----------------")
-        val request: Request = Request.Builder().url("http://192.168.1.112:8080").build()
+    private fun controlUserState() {
+        val user = UserService.getCurrentUser(this)
 
-        val listener = ScytheWebSocketListener()
-        val webSocket = mClient.newWebSocket(request,listener);
-        mClient.dispatcher().executorService().shutdown()
-    }
-}
+        val intent = if (user == null) {
+            Intent(this, LoginActivity::class.java)
+        }else{
+            Intent(this,HomeActivity::class.java)
+        }
 
-class ScytheWebSocketListener: WebSocketListener(){
-    override fun onOpen(webSocket: WebSocket, response: Response) {
-        super.onOpen(webSocket, response)
-
-        Log.i("WebsocketListener", "Opened")
+        startActivity(intent)
     }
 
-    override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-        super.onFailure(webSocket, t, response)
-        Log.i("WebsocketListener", t.message!!)
-    }
 }

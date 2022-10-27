@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.musa_kavak.scythe">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -15,8 +17,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Scythe_Android"
         tools:targetApi="31">
+        <service
+            android:name="com.musa_kavak.scythe.services.NLService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+        <service android:name="com.musa_kavak.scythe.services.BroadcastReceiverService"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.musa_kavak.scythe.views.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.musa_kavak.scythe.views.home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.musa_kavak.scythe.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

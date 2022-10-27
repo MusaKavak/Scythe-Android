@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Scythe_Android</string>
+    <string name="app_name">Scythe</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="scythe">Scythe</string>
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="are_you_new">Are You New?</string>
+    <string name="create_account">Create Account</string>
 </resources>
